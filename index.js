@@ -15,7 +15,23 @@ app.get("/", (req, res) => {
 app.post("/register", async (req, res) => {
   let user = new User(req.body); //get data from frontend
   let result = await user.save(); //and save it in user
+  result = result.toObject(); // convert into object
+  delete result.password;
   res.send(result);
+});
+
+app.post("/login", async (req, res) => {
+  console.log(req.body);
+  if (req.body.password && req.body.email) {
+    let user = await User.findOne(req.body).select("-password"); //get data from database
+    if (user) {
+      res.send({ result: user });
+    } else {
+      res.send({ result: "No user Found" });
+    }
+  } else {
+    res.send({ result: "Enter user name and pssword correctly" });
+  }
 });
 
 app.listen(port, () => {
