@@ -12,9 +12,10 @@ app.get("/", (req, res) => {
   res.send({ result: "All well Let's go..." });
 });
 
-app.post("/register", (req, res) => {
-  let user = new User(req.body);
-  let result = user.save();
+app.post("/register", async (req, res) => {
+  let user = new User(req.body); //get data from frontend
+  let result = await user.save(); //and save it in user
+  res.send(result);
 });
 
 app.listen(port, () => {
@@ -26,5 +27,5 @@ app.listen(port, () => {
 // git add README.md
 // git commit -m "first commit"
 // git branch -M main
-// git remote add origin https://github.com/ajay-CaTi/fullstack-backend.git
+// git remote add origin https://github.com/Ajayji77/fullst-backend.git
 // git push -u origin main
